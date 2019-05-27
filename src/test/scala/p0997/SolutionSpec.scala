@@ -15,6 +15,7 @@ class SolutionSpec extends FunSpec with Matchers {
 
       assert(expected == findJudge(N, trust))
       assert(expected == findJudge_(N, trust))
+      assert(expected == findJudge__(N, trust))
     }
 
     it("should return right hand side value if there only two people") {
@@ -25,6 +26,7 @@ class SolutionSpec extends FunSpec with Matchers {
 
       assert(expected == findJudge(N, trust))
       assert(expected == findJudge_(N, trust))
+      assert(expected == findJudge__(N, trust))
     }
 
     it("should return a judge if judge trusted by everyone except judge itself AND judge trust nobody") {
@@ -35,6 +37,7 @@ class SolutionSpec extends FunSpec with Matchers {
 
       assert(expected == findJudge(N, trust))
       assert(expected == findJudge_(N, trust))
+      assert(expected == findJudge__(N, trust))
     }
 
     it("should return a judge if judge trusted by everyone except judge itself AND judge trust nobody in 4 people") {
@@ -45,6 +48,7 @@ class SolutionSpec extends FunSpec with Matchers {
 
       assert(expected == findJudge(N, trust))
       assert(expected == findJudge_(N, trust))
+      assert(expected == findJudge__(N, trust))
     }
 
     it("should NOT return a judge if judge trusted by not everyone") {
@@ -65,6 +69,7 @@ class SolutionSpec extends FunSpec with Matchers {
 
       assert(expected == findJudge(N, trust))
       assert(expected == findJudge_(N, trust))
+      assert(expected == findJudge__(N, trust))
     }
 
     it("should NOT return a judge if there is not enough trust") {
@@ -75,6 +80,7 @@ class SolutionSpec extends FunSpec with Matchers {
 
       assert(expected == findJudge(N, trust))
       assert(expected == findJudge_(N, trust))
+      assert(expected == findJudge__(N, trust))
     }
 
   }
