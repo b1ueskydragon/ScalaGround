@@ -5,7 +5,11 @@ import org.scalatest.{FunSpec, Matchers}
 
 class SolutionSpec extends FunSpec with Matchers {
 
-  describe("findJudge") {
+  def assertAll[T, U](N: T, trust: U, expected: T)(fs: (T, U) => T*) {
+    fs.foreach(f => assert(expected === f(N, trust)))
+  }
+
+  describe("findJudge*") {
 
     it("should return judge if there only one people") {
       val N = 1
@@ -13,9 +17,7 @@ class SolutionSpec extends FunSpec with Matchers {
 
       val expected = 1
 
-      assert(expected == findJudge(N, trust))
-      assert(expected == findJudge_(N, trust))
-      assert(expected == findJudge__(N, trust))
+      assertAll(N, trust, expected)(findJudge, findJudge_, findJudge__)
     }
 
     it("should return right hand side value if there only two people") {
@@ -24,9 +26,7 @@ class SolutionSpec extends FunSpec with Matchers {
 
       val expected = 2
 
-      assert(expected == findJudge(N, trust))
-      assert(expected == findJudge_(N, trust))
-      assert(expected == findJudge__(N, trust))
+      assertAll(N, trust, expected)(findJudge, findJudge_, findJudge__)
     }
 
     it("should return a judge if judge trusted by everyone except judge itself AND judge trust nobody") {
@@ -35,9 +35,7 @@ class SolutionSpec extends FunSpec with Matchers {
 
       val expected = 3
 
-      assert(expected == findJudge(N, trust))
-      assert(expected == findJudge_(N, trust))
-      assert(expected == findJudge__(N, trust))
+      assertAll(N, trust, expected)(findJudge, findJudge_, findJudge__)
     }
 
     it("should return a judge if judge trusted by everyone except judge itself AND judge trust nobody in 4 people") {
@@ -46,9 +44,7 @@ class SolutionSpec extends FunSpec with Matchers {
 
       val expected = 3
 
-      assert(expected == findJudge(N, trust))
-      assert(expected == findJudge_(N, trust))
-      assert(expected == findJudge__(N, trust))
+      assertAll(N, trust, expected)(findJudge, findJudge_, findJudge__)
     }
 
     it("should NOT return a judge if judge trusted by not everyone") {
@@ -57,8 +53,7 @@ class SolutionSpec extends FunSpec with Matchers {
 
       val expected = -1
 
-      assert(expected == findJudge(N, trust))
-      assert(expected == findJudge_(N, trust))
+      assertAll(N, trust, expected)(findJudge, findJudge_, findJudge__)
     }
 
     it("should NOT return a judge if judge trusted by everyone except judge itself BUT judge trust someone") {
@@ -67,9 +62,7 @@ class SolutionSpec extends FunSpec with Matchers {
 
       val expected = -1
 
-      assert(expected == findJudge(N, trust))
-      assert(expected == findJudge_(N, trust))
-      assert(expected == findJudge__(N, trust))
+      assertAll(N, trust, expected)(findJudge, findJudge_, findJudge__)
     }
 
     it("should NOT return a judge if there is not enough trust") {
@@ -78,9 +71,7 @@ class SolutionSpec extends FunSpec with Matchers {
 
       val expected = -1
 
-      assert(expected == findJudge(N, trust))
-      assert(expected == findJudge_(N, trust))
-      assert(expected == findJudge__(N, trust))
+      assertAll(N, trust, expected)(findJudge, findJudge_, findJudge__)
     }
 
   }
