@@ -21,7 +21,7 @@ class FibSpec extends FunSpec with Matchers {
     }
 
     it("should be tail recursion") {
-      assert(fib(3) === fibTail(3))
+      assert(fib(8) === fibTail(8)) // 1 2 3 5 8 13 21 [34]
     }
 
   }
