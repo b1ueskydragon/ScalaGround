@@ -1,4 +1,4 @@
-package p0832
+package leetcode.p0832
 
 import leetcode.p0832.Solution._
 import org.scalatest._

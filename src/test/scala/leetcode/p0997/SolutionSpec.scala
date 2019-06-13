@@ -1,4 +1,4 @@
-package p0997
+package leetcode.p0997
 
 import leetcode.p0997.Solution._
 import org.scalatest.{FunSpec, Matchers}
