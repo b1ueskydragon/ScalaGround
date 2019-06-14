@@ -1,4 +1,4 @@
-name := "ScalaGround"
+name := "scalaground"
 
 version := "0.1"
 
