@@ -5,7 +5,7 @@ package leetcode.p0001
   */
 object Solution {
   def twoSum(nums: Array[Int], target: Int): Array[Int] = {
-    val halfs = nums.zipWithIndex.filter(_._1 == target / 2)
+    val halfs = nums.zipWithIndex.filter(_._1 * 2 == target)
     if (halfs.length == 2) halfs.map(_._2)
     else {
       val dict = nums.toSet
