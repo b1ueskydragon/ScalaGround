@@ -15,6 +15,7 @@ class SolutionSpec extends FunSpec with Matchers {
 
       assert(expected === findOcurrences(text, first, second))
       assert(expected === findOcurrences_(text, first, second))
+      assert(expected === findOcurrences__(text, first, second))
     }
 
     it("case of repeat words") {
@@ -25,7 +26,7 @@ class SolutionSpec extends FunSpec with Matchers {
 
       assert(expected === findOcurrences(text, first, second))
       assert(expected === findOcurrences_(text, first, second))
-
+      assert(expected === findOcurrences__(text, first, second))
     }
 
   }
