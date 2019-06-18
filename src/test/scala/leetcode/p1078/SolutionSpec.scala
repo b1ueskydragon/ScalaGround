@@ -14,6 +14,7 @@ class SolutionSpec extends FunSpec with Matchers {
       val expected = Array("girl", "student")
 
       assert(expected === findOcurrences(text, first, second))
+      assert(expected === findOcurrences_(text, first, second))
     }
 
     it("case of repeat words") {
@@ -23,6 +24,8 @@ class SolutionSpec extends FunSpec with Matchers {
       val expected = Array("we", "we")
 
       assert(expected === findOcurrences(text, first, second))
+      assert(expected === findOcurrences_(text, first, second))
+
     }
 
   }
