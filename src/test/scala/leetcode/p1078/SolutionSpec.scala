@@ -1,7 +1,7 @@
-package leetcode
+package leetcode.p1078
 
-import org.scalatest.{FunSpec, Matchers}
 import leetcode.p1078.Solution._
+import org.scalatest.{FunSpec, Matchers}
 
 class SolutionSpec extends FunSpec with Matchers {
 
