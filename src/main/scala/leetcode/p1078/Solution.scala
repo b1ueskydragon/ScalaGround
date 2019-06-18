@@ -19,19 +19,16 @@ object Solution {
   }
 
   def findOcurrences__(text: String, first: String, second: String): Array[String] = {
-    val words = text.split(" ").toList
-    val wordsNext = words.tail
-
-    def rec(res: List[String], words: List[String], wordsNext: List[String]): List[String] =
-      (words, wordsNext) match {
-        case (_, Nil) => res
-        case (h1 :: tail1, h2 +: tail2) if h1 == first && h2 == second =>
-          if (tail2.nonEmpty) rec(tail2.head :: res, tail1, tail2)
-          else rec(res, tail1, tail2)
-        case _ => rec(res, words.tail, wordsNext.tail)
+    @scala.annotation.tailrec
+    def rec(res: List[String], words: List[String]): Array[String] =
+      (words, words.tail) match {
+        case (_, Nil) => res.reverse.toArray
+        case (h1 :: tail1, h2 :: tail2)
+          if tail2.nonEmpty && h1 == first && h2 == second => rec(tail2.head :: res, tail1)
+        case _ => rec(res, words.tail)
       }
 
-    rec(Nil, words, wordsNext).reverse.toArray
+    rec(Nil, text.split(" ").toList)
   }
 
 }
