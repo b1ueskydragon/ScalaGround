@@ -11,24 +11,28 @@ class SolutionSpec extends FunSpec {
       val parentheses = "())"
       val expected = 1
       assert(minAddToMakeValid(parentheses) === expected)
+      assert(minAddToMakeValid_(parentheses) === expected)
     }
 
     it("case 2") {
       val parentheses = "((("
       val expected = 3
       assert(minAddToMakeValid(parentheses) === expected)
+      assert(minAddToMakeValid_(parentheses) === expected)
     }
 
     it("case 3") {
       val parentheses = "()"
       val expected = 0
       assert(minAddToMakeValid(parentheses) === expected)
+      assert(minAddToMakeValid_(parentheses) === expected)
     }
 
     it("case 4") {
       val parentheses = "()))(("
       val expected = 4
       assert(minAddToMakeValid(parentheses) === expected)
+      assert(minAddToMakeValid_(parentheses) === expected)
     }
 
   }

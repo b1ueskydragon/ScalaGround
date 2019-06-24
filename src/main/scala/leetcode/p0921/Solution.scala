@@ -12,7 +12,16 @@ object Solution {
     }
 
     count(S.toList, 0, 0)
+  }
 
+  def minAddToMakeValid_(S: String): Int = {
+    val stacks = S.foldLeft((0, 0))((stack, p) => (stack, p) match {
+      case (_, '(') => (stack._1, stack._2 + 1)
+      case (sk, ')') if sk._2 > 0 => (stack._1, stack._2 - 1)
+      case _ => (stack._1 + 1, stack._2)
+    })
+
+    stacks._1 + stacks._2
   }
 
 }
