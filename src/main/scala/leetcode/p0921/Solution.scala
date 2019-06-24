@@ -15,13 +15,13 @@ object Solution {
   }
 
   def minAddToMakeValid_(S: String): Int = {
-    val stacks = S.foldLeft((0, 0))((stack, p) => (stack, p) match {
-      case (_, '(') => (stack._1, stack._2 + 1)
-      case (sk, ')') if sk._2 > 0 => (stack._1, stack._2 - 1)
-      case _ => (stack._1 + 1, stack._2)
+    val cache = S.foldLeft((0, 0))((lr, p) => (lr, p) match {
+      case ((l, r), '(') => (l, r + 1)
+      case ((l, r), ')') if r > 0 => (l, r - 1)
+      case ((l, r), _) => (l + 1, r)
     })
 
-    stacks._1 + stacks._2
+    cache._1 + cache._2
   }
 
 }
