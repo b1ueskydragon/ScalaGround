@@ -42,6 +42,16 @@ class SolutionSpec extends FunSpec {
       assert(!isValid(s))
     }
 
+    it("case false 04") {
+      val s = "]"
+      assert(!isValid(s))
+    }
+
+    it("case false 05") {
+      val s = "]{"
+      assert(!isValid(s))
+    }
+
   }
 
 }
