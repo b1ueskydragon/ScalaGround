@@ -29,8 +29,8 @@ object Main extends App {
 
   val cont = for {
     m <- Cont.unit(v)
-    n <- Cont(addTwo[Unit](m, _))
-    l <- Cont(multipleFive[Unit](n, _))
+    n <- Cont(addTwo[Unit](m, _: Int => Unit))
+    l <- Cont(multipleFive[Unit](n, _: Int => Unit))
   } yield l
   cont.run(println)
 
