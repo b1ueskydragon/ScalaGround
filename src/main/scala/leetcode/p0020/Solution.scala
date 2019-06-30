@@ -26,8 +26,10 @@ object Solution {
         case Nil => stack
         case h :: tail => h match {
           case '(' | '[' | '{' => openStack(tail, h :: stack)
-          case ')' | ']' | '}' if stack.nonEmpty && h == rules(stack.head) => openStack(tail, stack.tail)
-          case _ => h :: stack
+          case ')' | ']' | '}' => stack.headOption match {
+            case Some(x) if h == rules(x) => openStack(tail, stack.tail)
+            case _ => h :: stack
+          }
         }
       }
 
