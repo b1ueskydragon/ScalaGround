@@ -25,4 +25,14 @@ class CpsSpec extends FunSpec {
 
   }
 
+  describe("subsequent processing") {
+
+    it("returns a function result that took a value added two, after take an `multipleFive` processing") {
+      val v = 10
+      val f: Int => String = _.toString
+      assert(addTwo(v, multipleFive(_, f)) === "60")
+    }
+
+  }
+
 }
