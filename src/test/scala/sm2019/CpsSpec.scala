@@ -33,6 +33,30 @@ class CpsSpec extends FunSpec {
       assert(addTwo(v, multipleFive(_, f)) === "60")
     }
 
+    it("could be defined by Cont") {
+      val v = 10
+
+      val cont = for {
+        m <- Cont.unit(v)
+        n <- Cont(addTwo[String](m, _: Int => String))
+        l <- Cont(multipleFive[String](n, _: Int => String))
+      } yield l
+
+      assert(cont.run(_.toString) === "60")
+    }
+
+    it("could be defined by flatMap") {
+      val v = 10
+
+      val cont = Cont.unit(v).flatMap { m =>
+        Cont(addTwo[String](m, _: Int => String)).flatMap { n =>
+          Cont(multipleFive[String](n, _: Int => String))
+        }
+      }
+
+      assert(cont.run(_.toString) === "60")
+    }
+
   }
 
 }
