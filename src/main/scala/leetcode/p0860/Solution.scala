@@ -14,4 +14,15 @@ object Solution {
 
     _count(bills.toList, 0, 0)
   }
+
+  def lemonadeChange_(bills: Array[Int]): Boolean = {
+    val (five, ten) = bills.foldLeft((0, 0)) { (acc, x) =>
+      val (f, t) = (acc._1, acc._2)
+      if (x == 5) (f + 1, t) else if (x == 10) (f - 1, t + 1)
+      else if (f > 0 && t > 0) (f - 1, t - 1) else if (f >= 3) (f - 3, t)
+      else return false
+    }
+    five >= 0 && ten >= 0
+  }
+
 }
