@@ -6,4 +6,20 @@ object Solution {
     val number = BigDecimal(res)
     if (number > Int.MaxValue) Int.MaxValue else if (number < Int.MinValue) Int.MinValue else number.toInt
   }
+
+  def myAtoi_(str: String): Int = {
+    @scala.annotation.tailrec
+    def rec(charArray: List[Char], res: List[Char]): List[Char] = charArray match {
+      case Nil => res
+      case h :: tail if (res.isEmpty && Set('-', '+').contains(h)) || (48 <= h && h <= 57) => rec(tail, h :: res)
+      case _ => if (res.nonEmpty && Set('-', '+').contains(res.head)) Nil else res
+    }
+
+    val res = rec(str.trim.split(" ").head.toList, Nil)
+    if (res.isEmpty || Set('-', '+').contains(res.head)) return 0
+
+    val number = BigDecimal(res.reverse.mkString)
+    if (number > Int.MaxValue) Int.MaxValue else if (number < Int.MinValue) Int.MinValue else number.toInt
+  }
+
 }
