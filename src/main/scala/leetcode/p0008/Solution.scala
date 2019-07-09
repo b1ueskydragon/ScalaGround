@@ -19,11 +19,17 @@ object Solution {
     if (res.isEmpty || Set('-', '+').contains(res.head)) return 0
 
     val isNeg = res.last == '-'
-    val num = res.foldRight(0) { (x, acc) =>
-      val n = x.asDigit
-      if (n == -1) acc else if (acc == 0) n else acc * 10 + n
+    try {
+      val num = res.foldRight(0) { (x, acc) =>
+        val n = x.asDigit
+        if (n == -1) acc else if (acc == 0) n
+        else Math.addExact(Math.multiplyExact(acc, 10), n) // has integer overflow
+      }
+      if (isNeg) -num else num
+    } catch {
+      case _: ArithmeticException => if (isNeg) Integer.MIN_VALUE else Integer.MAX_VALUE
     }
-    if (isNeg) -num else num
+
   }
 
 }
