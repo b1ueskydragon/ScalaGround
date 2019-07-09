@@ -18,8 +18,12 @@ object Solution {
     val res = rec(str.trim.split(" ").head.toList, Nil)
     if (res.isEmpty || Set('-', '+').contains(res.head)) return 0
 
-    val number = BigDecimal(res.reverse.mkString)
-    if (number > Int.MaxValue) Int.MaxValue else if (number < Int.MinValue) Int.MinValue else number.toInt
+    val isNeg = res.last == '-'
+    val num = res.foldRight(0) { (x, acc) =>
+      val n = x.asDigit
+      if (n == -1) acc else if (acc == 0) n else acc * 10 + n
+    }
+    if (isNeg) -num else num
   }
 
 }
