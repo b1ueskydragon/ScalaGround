@@ -36,12 +36,14 @@ object Solution {
   def myAtoi__(str: String): Int = {
     @scala.annotation.tailrec
     def rec(str: String, acc: String): String = {
-      if (str.isEmpty) acc
-      else str.head match {
-        case ' ' if acc.isEmpty => rec(str.tail, acc)
-        case x@('-' | '+') if acc.isEmpty => rec(str.tail, x.toString)
-        case x if 48 <= x && x <= 57 => rec(str.tail, acc + x)
-        case _ => acc
+      str.headOption match {
+        case None => acc // str.isEmpty
+        case Some(h) => h match {
+          case ' ' if acc.isEmpty => rec(str.tail, acc)
+          case x@('-' | '+') if acc.isEmpty => rec(str.tail, x.toString)
+          case x if 48 <= x && x <= 57 => rec(str.tail, acc + x)
+          case _ => acc
+        }
       }
     }
 
