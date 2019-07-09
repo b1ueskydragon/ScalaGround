@@ -33,4 +33,20 @@ object Solution {
     }
   }
 
+  def myAtoi__(str: String): Int = {
+    @scala.annotation.tailrec
+    def rec(str: String, acc: String): String = {
+      if (str.isEmpty) acc
+      else str.head match {
+        case ' ' if acc.isEmpty => rec(str.tail, acc)
+        case x@('-' | '+') if acc.isEmpty => rec(str.tail, x.toString)
+        case x if 48 <= x && x <= 57 => rec(str.tail, acc + x)
+        case _ => acc
+      }
+    }
+
+    val res = rec(str, "")
+    scala.util.Try(res.toInt).getOrElse(if (res.length < 2) 0 else if (res.head == '-') Int.MinValue else Int.MaxValue)
+  }
+
 }
