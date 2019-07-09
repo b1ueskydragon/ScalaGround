@@ -8,28 +8,29 @@ object Solution {
   }
 
   def myAtoi_(str: String): Int = {
+    val signs = Set('-', '+')
+
     @scala.annotation.tailrec
-    def rec(charArray: List[Char], res: List[Char]): List[Char] = charArray match {
-      case Nil => res
-      case h :: tail if (res.isEmpty && Set('-', '+').contains(h)) || (48 <= h && h <= 57) => rec(tail, h :: res)
-      case _ => if (res.nonEmpty && Set('-', '+').contains(res.head)) Nil else res
+    def rec(xs: List[Char], res: List[Char], isPos: Boolean = true): (List[Char], Boolean) = xs match {
+      case Nil => (res, isPos)
+      case h :: tail if res.isEmpty && h == '-' => rec(tail, h :: res, !isPos)
+      case h :: tail if res.isEmpty && h == '+' || 48 <= h && h <= 57 => rec(tail, h :: res, isPos)
+      case _ => if (res.nonEmpty && signs.contains(res.head)) (Nil, isPos) else (res, isPos)
     }
 
-    val res = rec(str.trim.split(" ").head.toList, Nil)
-    if (res.isEmpty || Set('-', '+').contains(res.head)) return 0
+    val (res, isPos) = rec(str.trim.split(" ").head.toList, Nil)
+    if (res.isEmpty || signs.contains(res.head)) return 0
 
-    val isNeg = res.last == '-'
     try {
       val num = res.foldRight(0) { (x, acc) =>
         val n = x.asDigit
         if (n == -1) acc else if (acc == 0) n
         else Math.addExact(Math.multiplyExact(acc, 10), n) // has integer overflow
       }
-      if (isNeg) -num else num
+      if (isPos) num else -num
     } catch {
-      case _: ArithmeticException => if (isNeg) Integer.MIN_VALUE else Integer.MAX_VALUE
+      case _: ArithmeticException => if (isPos) Integer.MAX_VALUE else Integer.MIN_VALUE
     }
-
   }
 
 }

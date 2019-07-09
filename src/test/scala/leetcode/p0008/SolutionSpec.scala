@@ -45,6 +45,12 @@ class SolutionSpec extends FunSpec {
       assert(myAtoi_(str) === 4)
     }
 
+    it("returns 0 if string has valid sign but not valid string") {
+      val str =  "-+1"
+      assert(myAtoi(str) === 0)
+      assert(myAtoi_(str) === 0)
+    }
+
     it("returns 0 if string has only a sign") {
       val str = "+"
       assert(myAtoi(str) === 0)
