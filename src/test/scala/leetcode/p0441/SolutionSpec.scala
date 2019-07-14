@@ -15,6 +15,10 @@ class SolutionSpec extends FunSpec {
       assert(arrangeCoins_(5) === 2)
       assert(arrangeCoins_(8) === 3)
       assert(arrangeCoins_(1804289383) === 60070)
+
+      assert(arrangeCoins__(5) === 2)
+      assert(arrangeCoins__(8) === 3)
+      assert(arrangeCoins__(1804289383) === 60070)
     }
 
     it("returns final step that completed if there are n enough coins") {
@@ -25,6 +29,10 @@ class SolutionSpec extends FunSpec {
       assert(arrangeCoins_(3) === 2)
       assert(arrangeCoins_(6) === 3)
       assert(arrangeCoins_(10) === 4)
+
+      assert(arrangeCoins__(3) === 2)
+      assert(arrangeCoins__(6) === 3)
+      assert(arrangeCoins__(10) === 4)
     }
 
   }

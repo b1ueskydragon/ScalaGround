@@ -21,13 +21,9 @@ object Solution {
     rec(n, 1)
   }
 
-  /** Linear search */
-  def arrangeCoinsSlow(n: Int): Int = {
-    (1 to n).foldLeft((0L, 0)) { (tup, x) =>
-      val (sum, k) = tup
-      val nextSum = sum + x // why Long? since may cause Integer overflow
-      if (sum <= n) (nextSum, k + 1) else (nextSum, k)
-    }._2 - 1
+  /** Linear search with subtract and break off */
+  def arrangeCoins__(n: Int): Int = (1 to n).foldLeft(n) { (acc, k) =>
+    if (acc - k > 0) acc - k else if (acc - k == 0) return acc else return k - 1
   }
 
 }
