@@ -23,7 +23,7 @@ object Solution {
 
   /** Linear search with subtract and break off */
   def arrangeCoins__(n: Int): Int = Stream.from(1).foldLeft(n) { (acc, k) =>
-    if (acc - k > 0) acc - k else if (acc - k == 0) return acc else return k - 1
+    if (acc > k) acc - k else if (acc == k) return acc else return k - 1
   }
 
 }
