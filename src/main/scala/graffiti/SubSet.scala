@@ -12,11 +12,10 @@ object SubSet {
       * @return ps subsets
       */
     @scala.annotation.tailrec
-    def rec(xs: List[T], subs: List[List[T]]): List[List[T]] = {
+    def rec(xs: List[T], subs: List[List[T]]): List[List[T]] =
       if (xs.isEmpty) subs else rec(xs.tail, subs ::: subs.map(xs.head :: _))
-    }
 
-    rec(ts, List.empty[List[T]])
+    rec(ts, List(Nil))
   }
 
 }
