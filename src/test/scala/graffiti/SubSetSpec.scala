@@ -10,15 +10,15 @@ class SubSetSpec extends FunSpec {
     it("returns 8 subsets in case [a, b, c] with specific order") {
       val expected = List(
         List(),
-        List('c),
-        List('c, 'b),
-        List('c, 'b, 'a),
-        List('c, 'a),
+        List('a),
         List('b),
         List('b, 'a),
-        List('a)
+        List('c),
+        List('c, 'a),
+        List('c, 'b),
+        List('c, 'b, 'a)
       )
-      val actual = generate[Symbol](List('a, 'b, 'c))
+      val actual = generate(List('a, 'b, 'c))
       assert(actual === expected)
     }
 
