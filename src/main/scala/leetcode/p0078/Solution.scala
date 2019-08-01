@@ -10,4 +10,10 @@ object Solution {
     rec(nums.toList, List(Nil))
   }
 
+  def subsets_(nums: Array[Int]): List[List[Int]] = {
+    def rec(xs: Array[Int], head: Int): List[List[Int]] = ???
+
+    rec(nums, 0)
+  }
+
 }
