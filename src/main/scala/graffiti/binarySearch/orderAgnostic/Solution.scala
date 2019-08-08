@@ -4,6 +4,8 @@ object Solution {
   def searchKeyIndexFromSortedArray(ary: Array[Int], key: Int): Int = {
     @scala.annotation.tailrec
     def search(low: Int, high: Int, as: Array[Int]): Int = {
+      if (low > high) return -1
+
       val middle = low + (high - low) / 2
       val midVal = as(middle)
       if (midVal == key) middle else if (midVal > key) search(low, middle - 1, as) else search(middle + 1, high, as)

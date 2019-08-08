@@ -17,6 +17,13 @@ class SolutionSpec extends FunSpec {
       assert(expected === searchKeyIndexFromSortedArray(ary, key))
     }
 
+    it("returns -1 if not exists") {
+      val ary = Array(0, 1)
+      val key = 100
+      val expected = -1
+      assert(expected === searchKeyIndexFromSortedArray(ary, key))
+    }
+
   }
 
 }
