@@ -16,22 +16,16 @@ object Hanoi {
     }
   }
 
-  // TODO test code
-  def hanoi(ns: List[Int], x: String, y: String, z: String): Unit = {
-    // x, y, z stack
-    def rec(): Unit = {
-      if (ns.nonEmpty) {
-        hanoi(ns.tail, x, z, y)
-        println(s"""${ns.head}, $x -> $y""")
-        hanoi(ns.tail, z, y, x)
-      }
-    }
+  def hanoi(stackX: List[Int], stackY: List[Int], stackZ: List[Int]): Unit = {
+    hanoi(stackX.init, stackX.head :: stackY, stackZ)
+    println()
+    hanoi(stackX.init, stackX.head :: stackY, stackZ)
   }
 
   def main(args: Array[String]): Unit = {
     hanoi(3, "left", "middle", "right")
     println()
-    hanoi(List(3, 2, 1), "left", "middle", "right") // order
+    //hanoi(List(3, 2, 1), "left", "middle", "right") // order
   }
 
 }
