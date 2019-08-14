@@ -16,16 +16,26 @@ object Hanoi {
     }
   }
 
-  def hanoi(stackX: List[Int], stackY: List[Int], stackZ: List[Int]): Unit = {
-    hanoi(stackX.init, stackX.head :: stackY, stackZ)
-    println()
-    hanoi(stackX.init, stackX.head :: stackY, stackZ)
+
+  def move(pos: Pos, rest: List[Pos]): Unit = {
+    val Pos(n, from, to, via) = pos
+    if (n == 1) {
+      println(s"$from -> $to")
+      move(rest.head, rest.tail)
+    } else {
+      val pos1 = Pos(n - 1, from, via, to)
+      val pos2 = Pos(1, from, to, via)
+      val pos3 = Pos(n - 1, via, to, from)
+      move(pos1, pos2 :: pos3 :: rest)
+    }
   }
+
 
   def main(args: Array[String]): Unit = {
     hanoi(3, "left", "middle", "right")
     println()
-    //hanoi(List(3, 2, 1), "left", "middle", "right") // order
   }
 
 }
+
+case class Pos(n: Int, from: Int, to: Int, via: Int)
