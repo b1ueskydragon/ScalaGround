@@ -1,17 +1,18 @@
 package graffiti
 
+/** H(n) = H(n-1) + H(1) + H(n-1) */
 object Hanoi {
-  /** H(n) = H(n-1) + H(1) + H(n-1)
+  /** A `move`
     *
-    * @param n 1 is the smallest, n is the biggest
-    * @param x peg from
-    * @param y peg to go
-    * @param z peg remain
+    * @param n disk. 1 is the smallest, n is the biggest
+    * @param x peg move from. init is left
+    * @param y peg to go. init is middle
+    * @param z peg via. init is right
     */
   def move(n: Int, x: String, y: String, z: String): Unit = {
     if (n > 0) {
       move(n - 1, x, z, y)
-      println(s"$n, $x -> $y") // move a biggest one, left to middle (base plate)
+      println(s"$n, $x -> $y")
       move(n - 1, z, y, x)
     }
   }
