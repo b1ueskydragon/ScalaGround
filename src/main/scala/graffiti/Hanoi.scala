@@ -16,6 +16,15 @@ object Hanoi {
     }
   }
 
+  def movef(n: Int, from: String, to: String, via: String): Unit = {
+    if (n == 1) {
+      println(s"$from -> $to")
+    } else {
+      movef(n - 1, from, via, to)
+      movef(1, from, to, via)
+      movef(n - 1, via, to, from)
+    }
+  }
 
   def move(pos: Pos, rest: List[Pos]): Unit = {
     val Pos(n, from, to, via) = pos
@@ -34,6 +43,8 @@ object Hanoi {
     hanoi(3, "left", "middle", "right")
     println()
     move(Pos(3, "left", "middle", "right"), Nil)
+    println()
+    movef(3, "left", "middle", "right")
   }
 
 }
