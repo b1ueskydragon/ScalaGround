@@ -39,6 +39,22 @@ object Hanoi {
     }
   }
 
+
+  def hanoi(n: Int): Array[String] = {
+    val buff = scala.collection.mutable.ArrayBuffer.empty[String]
+
+    def _move(n: Int, to: String, from: String, via: String) {
+      if (n > 0) {
+        _move(n - 1, to, via, from)
+        buff.append(s"$to -> $from")
+        _move(n - 1, via, from, to)
+      }
+    }
+
+    _move(n, "left", "middle", "right")
+    buff.toArray
+  }
+
   def main(args: Array[String]): Unit = {
     move(3, "left", "middle", "right")
     println()
