@@ -21,7 +21,7 @@ object Hanoi {
     val Pos(n, from, to, via) = pos
     if (n == 1) {
       println(s"$from -> $to")
-      move(rest.head, rest.tail)
+      if (rest.nonEmpty) move(rest.head, rest.tail)
     } else {
       val pos1 = Pos(n - 1, from, via, to)
       val pos2 = Pos(1, from, to, via)
@@ -30,12 +30,12 @@ object Hanoi {
     }
   }
 
-
   def main(args: Array[String]): Unit = {
     hanoi(3, "left", "middle", "right")
     println()
+    move(Pos(3, "left", "middle", "right"), Nil)
   }
 
 }
 
-case class Pos(n: Int, from: Int, to: Int, via: Int)
+case class Pos(n: Int, from: String, to: String, via: String)
