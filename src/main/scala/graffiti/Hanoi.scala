@@ -11,7 +11,7 @@ object Hanoi {
   def move(n: Int, x: String, y: String, z: String): Unit = {
     if (n > 0) {
       move(n - 1, x, z, y)
-      println(s"""$n, $x -> $y""") // move a biggest one, left to middle (base plate)
+      println(s"$n, $x -> $y") // move a biggest one, left to middle (base plate)
       move(n - 1, z, y, x)
     }
   }
@@ -43,11 +43,11 @@ object Hanoi {
   def hanoi(n: Int): Array[String] = {
     val buff = scala.collection.mutable.ArrayBuffer.empty[String]
 
-    def _move(n: Int, to: String, from: String, via: String) {
+    def _move(n: Int, from: String, to: String, via: String) {
       if (n > 0) {
-        _move(n - 1, to, via, from)
-        buff.append(s"$to -> $from")
-        _move(n - 1, via, from, to)
+        _move(n - 1, from, via, to)
+        buff.append(s"$from -> $to")
+        _move(n - 1, via, to, from)
       }
     }
 
