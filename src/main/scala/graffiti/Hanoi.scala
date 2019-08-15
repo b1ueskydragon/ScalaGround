@@ -17,6 +17,8 @@ object Hanoi {
   }
 
   def move_(n: Int, from: String, to: String, via: String): Unit = {
+    if (n < 1) return
+
     if (n == 1) {
       println(s"$from -> $to")
     } else {
@@ -28,6 +30,8 @@ object Hanoi {
 
   def move___(pos: Pos, rest: List[Pos]): Unit = {
     val Pos(n, from, to, via) = pos
+    if (n < 1) return
+
     if (n == 1) {
       println(s"$from -> $to")
       if (rest.nonEmpty) move___(rest.head, rest.tail)
@@ -38,7 +42,6 @@ object Hanoi {
       move___(pos1, pos2 :: pos3 :: rest)
     }
   }
-
 
   def hanoi(n: Int): Array[String] = {
     val buff = scala.collection.mutable.ArrayBuffer.empty[String]
