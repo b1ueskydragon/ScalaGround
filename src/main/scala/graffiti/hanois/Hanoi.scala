@@ -29,6 +29,12 @@ object Hanoi {
     }
   }
 
+  def main(args: Array[String]): Unit = {
+    move(3, "left", "middle", "right")
+    println()
+    move_(3, "left", "middle", "right")
+  }
+
   def hanoi(n: Int): Array[String] = {
     val buff = scala.collection.mutable.ArrayBuffer.empty[String]
 
@@ -44,10 +50,10 @@ object Hanoi {
     buff.toArray
   }
 
-  def main(args: Array[String]): Unit = {
-    move(3, "left", "middle", "right")
-    println()
-    move_(3, "left", "middle", "right")
+  def hanoiList(n: Int, from: String, to: String, via: String): List[String] = {
+    if (n < 1) Nil
+    else if (n == 1) List(s"$from -> $to")
+    else hanoiList(n - 1, from, via, to) ::: hanoiList(1, from, to, via) ::: hanoiList(n - 1, via, to, from)
   }
 
 }
