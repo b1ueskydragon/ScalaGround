@@ -1,4 +1,4 @@
-package graffiti
+package graffiti.hanois
 
 /** H(n) = H(n-1) + H(1) + H(n-1) */
 object Hanoi {
@@ -29,21 +29,6 @@ object Hanoi {
     }
   }
 
-  def move___(pos: Pos, rest: List[Pos]): Unit = {
-    val Pos(n, from, to, via) = pos
-    if (n < 1) return
-
-    if (n == 1) {
-      println(s"$from -> $to")
-      if (rest.nonEmpty) move___(rest.head, rest.tail)
-    } else {
-      val pos1 = Pos(n - 1, from, via, to)
-      val pos2 = Pos(1, from, to, via)
-      val pos3 = Pos(n - 1, via, to, from)
-      move___(pos1, pos2 :: pos3 :: rest)
-    }
-  }
-
   def hanoi(n: Int): Array[String] = {
     val buff = scala.collection.mutable.ArrayBuffer.empty[String]
 
@@ -62,11 +47,7 @@ object Hanoi {
   def main(args: Array[String]): Unit = {
     move(3, "left", "middle", "right")
     println()
-    move___(Pos(3, "left", "middle", "right"), Nil)
-    println()
     move_(3, "left", "middle", "right")
   }
 
 }
-
-case class Pos(n: Int, from: String, to: String, via: String)

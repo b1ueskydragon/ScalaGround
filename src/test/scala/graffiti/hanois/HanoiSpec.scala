@@ -1,7 +1,7 @@
-package graffiti
+package graffiti.hanois
 
+import graffiti.hanois.Hanoi.hanoi
 import org.scalatest.FunSpec
-import graffiti.Hanoi.hanoi
 
 class HanoiSpec extends FunSpec {
 
