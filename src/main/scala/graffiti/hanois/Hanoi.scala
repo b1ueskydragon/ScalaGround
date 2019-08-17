@@ -19,20 +19,16 @@ object Hanoi {
 
   def move_(n: Int, from: String, to: String, via: String): Unit = {
     if (n < 1) return
-
-    if (n == 1) {
-      println(s"$from -> $to")
-    } else {
-      move_(n - 1, from, via, to)
-      move_(1, from, to, via)
-      move_(n - 1, via, to, from)
-    }
+    move_(n - 1, from, via, to)
+    println(s"$n, $from -> $to")
+    move_(n - 1, via, to, from)
   }
 
   def main(args: Array[String]): Unit = {
-    move(3, "left", "middle", "right")
+    val disks = 3
+    move(disks, "left", "middle", "right")
     println()
-    move_(3, "left", "middle", "right")
+    move_(disks, "left", "middle", "right")
   }
 
   def hanoi(n: Int): Array[String] = {
