@@ -4,31 +4,21 @@ package graffiti.hanois
 object Hanoi {
   /** A `move`
     *
-    * @param n disk. 1 is the smallest, n is the biggest
-    * @param x peg move from. init is left
-    * @param y peg to go. init is middle
-    * @param z peg via. init is right
+    * @param n    disk. 1 is the smallest, n is the biggest
+    * @param from peg move from. init is left
+    * @param to   peg to go. init is middle
+    * @param via  peg via. init is right
     */
-  def move(n: Int, x: String, y: String, z: String): Unit = {
-    if (n > 0) {
-      move(n - 1, x, z, y)
-      println(s"$n, $x -> $y")
-      move(n - 1, z, y, x)
-    }
-  }
-
-  def move_(n: Int, from: String, to: String, via: String): Unit = {
+  def move(n: Int, from: String, to: String, via: String): Unit = {
     if (n < 1) return
-    move_(n - 1, from, via, to)
-    println(s"$n, $from -> $to")
-    move_(n - 1, via, to, from)
+    move(n - 1, from, via, to)
+    println(s"$n, $from -> $to") // H(1)
+    move(n - 1, via, to, from)
   }
 
   def main(args: Array[String]): Unit = {
     val disks = 3
     move(disks, "left", "middle", "right")
-    println()
-    move_(disks, "left", "middle", "right")
   }
 
   def hanoi(n: Int): Array[String] = {
