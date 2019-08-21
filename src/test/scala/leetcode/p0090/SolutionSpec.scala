@@ -10,12 +10,25 @@ class SolutionSpec extends FunSpec {
     it("returns 6 subsets without duplication in case [1, 2, 2]") {
       val nums = Array(1, 2, 2)
       val expected = List(
-        List(2),
+        List(),
         List(1),
-        List(1, 2, 2),
+        List(2),
+        List(2, 1),
         List(2, 2),
-        List(1, 2),
-        List()
+        List(2, 2, 1)
+      )
+      assert(subsetsWithDup(nums) === expected)
+    }
+
+    it("returns same result without duplication in case [2, 1, 2]") {
+      val nums = Array(2, 1, 2)
+      val expected = List(
+        List(),
+        List(1),
+        List(2),
+        List(2, 1),
+        List(2, 2),
+        List(2, 2, 1)
       )
       assert(subsetsWithDup(nums) === expected)
     }
