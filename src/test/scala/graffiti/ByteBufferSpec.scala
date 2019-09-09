@@ -34,14 +34,17 @@ class ByteBufferSpec extends FunSpec {
     }
 
     it("should not consider the value which is overflowed from unsigned int") {
+      // `Int.MaxValue * 2 + 2` could be expressed in `0`
       // `Int.MaxValue * 2 + 3` could be expressed in `1`
-      val valuePos = Some(1L)
+      val valuePos = Some(0L)
 
       // cannot be expressed in Int (32 bit).
-      val overflowedFromUnsignedInt = Int.MaxValue * 2L + 3L
+      val maxValueOfUnsignedInt = Int.MaxValue * 2L + 1L
+      // overflow further more.
+      val overflowedFromUnsignedInt = maxValueOfUnsignedInt + 1L
 
-      assert(overflowedFromUnsignedInt === 4294967297L)
-      assert(toUnsignedInt(valuePos).get === 1L)
+      assert(overflowedFromUnsignedInt === 4294967296L)
+      assert(toUnsignedInt(valuePos).get === 0L)
     }
 
     it("should return None if value is None") {
