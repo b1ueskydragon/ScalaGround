@@ -6,9 +6,9 @@ sealed case class Letter(
 )
 
 object Solution {
-  def letterCasePermutation(S: String) = { // List[String]
-    val pairs = S.map(s => if (s.isLetter) (s.toLower, s.toUpper) else s)
-    pairs
+  def letterCasePermutation(S: String): List[String] = {
+    val pairs = S.map(s => if (s.isLetter) List(s.toLower, s.toUpper) else List(s))
+    pairs.flatten.combinations(S.length).map(_.mkString).toList // not combination, direct product
   }
 
   def main(args: Array[String]): Unit = {
@@ -16,3 +16,6 @@ object Solution {
     println(res) // ab, aB, Ab, AB
   }
 }
+
+
+
