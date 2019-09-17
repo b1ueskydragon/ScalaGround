@@ -1,10 +1,5 @@
 package leetcode.p0784
 
-sealed case class Letter(
-  alpha: Option[(Char, Char)] = None,
-  digit: Option[Int] = None
-)
-
 object Solution {
 
   def product[T](list: List[List[T]]): List[List[T]] = list match {
