@@ -8,7 +8,7 @@ object Solution {
     case x :: xs => for {
       i <- x
       j <- product(xs)
-    } yield List(i) ::: j
+    } yield i :: j
   }
 
   def letterCasePermutation(S: String): List[String] = {
