@@ -13,6 +13,7 @@ object CartesianProduct {
     case xs :: tail => xs.flatMap(x => product(tail).map(Traversable(x) ++ _))
   }
 
+  // recursive; replace flatMap to yielding an element in each for-comprehension
   def product_[T](xss: Traversable[Traversable[T]]): Traversable[Traversable[T]] = xss match {
     case Nil => Nil
     case xs :: Nil => xs.map(List(_)) // only an one list
@@ -22,8 +23,14 @@ object CartesianProduct {
     } yield Traversable(m) ++ n
   }
 
-  // TODO; non-recursive (foldLeft)
-  // def product___[T](xss: Traversable[Traversable[T]]): Traversable[Traversable[T]] = ???
+  // non-recursive
+  // Traversable.empty[Traversable[T]] != Traversable(Traversable.empty[T])
+  def product___[T](xss: Traversable[Traversable[T]]): Traversable[Traversable[T]] =
+    xss.foldLeft(Traversable(Traversable.empty[T])) { (acc, xs) =>
+      acc.flatMap { h =>
+        xs.map(x => h ++ Traversable(x))
+      }
+    }
 
   def product2[T](xs: Traversable[T], ys: Traversable[T]): Traversable[(T, T)] = xs.flatMap(x => ys.map((x, _)))
 
@@ -35,6 +42,7 @@ object CartesianProduct {
     val lists = List(List('a, 'b, 'c), List(1, 2, 3))
     println(product(lists))
     println(product_(lists))
+    println(product___(lists))
 
     println(product2(List('y, 'Y), List('z, 'Z)))
   }
