@@ -3,8 +3,7 @@ package graffiti
 object CartesianProduct {
 
   object Recursive {
-    /**
-      * product ( { {a, A}, {b, B}, {c, C} } )
+    /** product ( { {a, A}, {b, B}, {c, C} } )
       *
       * product ( {a, A} :: product ( { {b, B}, {c, C} } ) )
       */
@@ -27,7 +26,20 @@ object CartesianProduct {
   }
 
   object NonRecursive {
-    // Traversable.empty[Traversable[T]] != Traversable(Traversable.empty[T])
+    /** product ( { {a, A}, {b, B} } )
+      *
+      * a -- map --> { {a, b}, {a, B} }
+      * ↑
+      * we could get a flatten head element (a) with flatMap.
+      *
+      * xs.map := h ++ x
+      *
+      * h | h ∈ a group of plain element[T] (flatted xxs)
+      * x | x ∈ xs
+      * xs | xs ∈ xxs
+      *
+      * `Traversable.empty[Traversable[T]]` != `Traversable(Traversable.empty[T])`
+      */
     def product[T](xss: Traversable[Traversable[T]]): Traversable[Traversable[T]] =
       xss.foldLeft(Traversable(Traversable.empty[T])) { (acc, xs) =>
         acc.flatMap { h =>
