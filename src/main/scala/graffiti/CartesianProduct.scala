@@ -50,19 +50,4 @@ object CartesianProduct {
     def product2[T](xs: Traversable[T], ys: Traversable[T]): Traversable[(T, T)] = xs.flatMap(x => ys.map((x, _)))
   }
 
-
-  def main(args: Array[String]): Unit = {
-    println(Recursive.product(Nil))
-
-    val alist = List(List('a, 'b, 'c))
-    println(Recursive.product(alist))
-
-    val lists = List(List('a, 'b, 'c), List(1, 2, 3))
-    println(Recursive.product(lists))
-    println(Recursive.productFor(lists))
-    println(NonRecursive.product(lists))
-
-    println(NonRecursive.product2(List('y, 'Y), List('z, 'Z)))
-  }
-
 }
