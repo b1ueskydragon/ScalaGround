@@ -34,7 +34,7 @@ object CartesianProduct {
       *
       * xs.map := h ++ x
       *
-      * h | h ∈ a group of plain element[T] (flatted xxs)
+      * h | h ∈ a plain type of result already generated(accumulated)
       * x | x ∈ xs
       * xs | xs ∈ xxs
       *
