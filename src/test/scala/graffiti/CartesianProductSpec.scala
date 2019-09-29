@@ -62,11 +62,29 @@ class CartesianProductSpec extends FunSpec {
       assert(expected === CartesianProduct.NonRecursive.product(given))
     }
 
-    it("Here is a pair of list that only accept two elements") {
-      val a = List('y, 'Y)
-      val b = List('z, 'Z)
-      val expected = List(('y, 'z), ('y, 'Z), ('Y, 'z), ('Y, 'Z))
-      assert(expected === CartesianProduct.NonRecursive.product2(a, b))
+    describe("merge linearly") {
+
+      describe("base case") {
+        it("return a pair of list that only accept two elements") {
+          val a = List('y, 'Y)
+          val b = List('z, 'Z)
+          val expected = List(('y, 'z), ('y, 'Z), ('Y, 'z), ('Y, 'Z))
+          assert(expected === CartesianProduct.NonRecursive.product2(a, b))
+        }
+      }
+
+      describe("standard case") {
+        it("returns a pair of list with recursion") {
+          val given = List(List('a, 'b, 'c), List(1, 2, 3))
+          val expected = List(
+            ('a, 1), ('a, 2), ('a, 3),
+            ('b, 1), ('b, 2), ('b, 3),
+            ('c, 1), ('c, 2), ('c, 3)
+          )
+          assert(expected === CartesianProduct.NonRecursive.productMerge(given))
+        }
+      }
+
     }
 
   }
