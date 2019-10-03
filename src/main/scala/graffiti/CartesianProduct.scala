@@ -23,6 +23,12 @@ object CartesianProduct {
       } yield Traversable(m) ++ n
     }
 
+    def productMerge[T](xss: Traversable[Traversable[T]]): Traversable[Traversable[T]] = xss match {
+      case Nil => Traversable.empty[Traversable[T]]
+      case xs :: ys :: Nil => xs.flatMap(x => ys.map(y => Traversable(x, y)))
+      case xs :: tail => Traversable(xs) ++ productMerge(tail) // TODO flatten
+    }
+
   }
 
   object NonRecursive {
@@ -48,12 +54,6 @@ object CartesianProduct {
       }
 
     def product2[T](xs: Traversable[T], ys: Traversable[T]): Traversable[(T, T)] = xs.flatMap(x => ys.map((x, _)))
-
-    def productMerge[T](xss: Traversable[Traversable[T]]): Traversable[(T, T)] = xss match {
-      case Nil => Nil
-      case xs :: ys :: Nil => product2(xs, ys)
-      case xs :: tail => tail.flatMap(product2(xs, _))
-    }
 
   }
 
