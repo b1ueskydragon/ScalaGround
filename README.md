@@ -1,3 +1,1 @@
-### Practice, Quiz, anything else with Scala
-#### Individual-parted program
-#### 2017.10. ~
+algorithms, data structures, quizzes, design patterns🦁
