@@ -10,8 +10,15 @@ object Solution {
     rec(nums.toList, List(Nil))
   }
 
-  def subsets_(nums: Array[Int]): List[List[Int]] = {
-    def rec(xs: Array[Int], head: Int): List[List[Int]] = ???
+  def subsets_[T](nums: Array[T]): List[List[T]] = {
+    def rec(as: Array[T], pos: Int): List[List[T]] = {
+      if (pos >= as.length) List(Nil)
+      else {
+        val rem = rec(as, pos + 1)
+        val newRem = rem.map(list => as(pos) :: list)
+        newRem ::: rem
+      }
+    }
 
     rec(nums, 0)
   }

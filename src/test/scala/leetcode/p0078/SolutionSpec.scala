@@ -21,9 +21,18 @@ class SolutionSpec extends FunSpec {
       assert(subsets(Array(1, 2, 3)) === expected)
     }
 
-    it("should return another order in middle recursion") {
-      val expected = ??? // List(List(1, 2, 3),  ... , List())
-      assert(subsets_(Array(1, 2, 3)) === expected)
+    it("should return order that go ahead cursor first, then cycle of convert and concat") {
+      val expected = List(
+        List('a, 'b, 'c),
+        List('a, 'b),
+        List('a, 'c),
+        List('a),
+        List('b, 'c),
+        List('b),
+        List('c),
+        List()
+      )
+      assert(subsets_(Array('a, 'b, 'c)) === expected)
     }
 
   }
