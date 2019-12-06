@@ -8,7 +8,8 @@ object SubSet {
       * T = S ∪ {x} ( T = S ++ {x} )
       * P(T) = P(S) ∪ { p ∈ P(S) | p ∪ {x} }
       *
-      * @param xs group T
+      * @param xs   group T
+      * @param subs subsets
       * @return ps subsets
       */
     @scala.annotation.tailrec
