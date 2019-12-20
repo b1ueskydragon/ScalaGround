@@ -23,13 +23,13 @@ class CombinationSpec extends FunSpec {
         val k = 3
 
         println(Combination.g(ts.tail, Nil)) // debug
-        assert(Combination.f(ts, k) === ts.combinations(k).toList)
+        assert(Combination.f(ts, Nil) === ts.combinations(k).toList)
       }
 
       it("when happens if k is bigger than 3") {
         val ts = List('a, 'b, 'c, 'd, 'e, 'f, 'g)
         val k = 4
-        assert(Combination.f(ts, k) === ts.combinations(k).toList)
+        assert(Combination.s(ts, Nil) === ts.combinations(k).toList)
       }
 
     }
