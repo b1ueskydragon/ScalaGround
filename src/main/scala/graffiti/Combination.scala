@@ -4,11 +4,11 @@ package graffiti
 object Combination {
   // @scala.annotation.tailrec
   def combination[T](xs: List[T], k: Int, res: List[List[T]]): List[List[T]] =
-    if (k < 1) res
-    else xs match {
-      case h :: tail =>
-        // TODO use cps
-        combination(tail, k - 1, res) // TODO concat head
+    if (k < 1) List(Nil)
+    else {
+      val f: List[T] => List[List[T]] =
+        ts => combination(ts, k - 1, res) // TODO
+      cps(xs, res)(f)
     }
 
   @scala.annotation.tailrec

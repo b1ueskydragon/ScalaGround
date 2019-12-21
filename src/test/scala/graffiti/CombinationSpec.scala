@@ -34,15 +34,25 @@ class CombinationSpec extends FunSpec {
 
     }
 
-    // TODO
     describe("Continuation Passing Style") {
 
+      it("invokes function continuously to it's tail") {
+        val xs = List('a, 'b, 'c)
+        val f: List[Symbol] => List[List[Symbol]] = xs => List(xs.reverse)
+
+        val actual = Combination.cps(xs, Nil)(f)
+        val expected = List(xs.reverse) ::: List(xs.tail.reverse) ::: List(xs.tail.tail.reverse)
+        assert(actual === expected)
+      }
+
+      // TODO
       it("generate a tail continuously") {
         val ts = List('a, 'b, 'c, 'd, 'e, 'f, 'g)
         val k = 4
-        val actual = Combination.combination(ts, k, Nil).filter(_.length == k)
-        println(actual.length)
-        assert(actual === ts.combinations(k).toList)
+        val actual = Combination.combination(ts, k, Nil)
+        val expected = ts.combinations(k).toList
+        println(actual.length, expected.length)
+        assert(actual === expected)
       }
 
     }
