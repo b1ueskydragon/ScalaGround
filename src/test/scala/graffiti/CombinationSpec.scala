@@ -34,6 +34,19 @@ class CombinationSpec extends FunSpec {
 
     }
 
+    // TODO
+    describe("Continuation Passing Style") {
+
+      it("generate a tail continuously") {
+        val ts = List('a, 'b, 'c, 'd, 'e, 'f, 'g)
+        val k = 4
+        val actual = Combination.combination(ts, k, Nil).filter(_.length == k)
+        println(actual.length)
+        assert(actual === ts.combinations(k).toList)
+      }
+
+    }
+
   }
 
 }
