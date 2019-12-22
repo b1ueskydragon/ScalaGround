@@ -3,19 +3,22 @@ package graffiti
 
 object Combination {
   // @scala.annotation.tailrec
-  def combination[T](xs: List[T], k: Int, res: List[List[T]]): List[List[T]] =
-    if (k < 1) List(Nil)
-    else {
-      val f: List[T] => List[List[T]] =
-        ts => combination(ts, k - 1, res) // TODO
-      cps(xs, res)(f)
+  def combination[T](xs: List[T], k: Int): List[List[T]] =
+    if (k < 1) List(Nil) // a base case to concat. e. g) h :: List(_) in `g`.
+    else cps(xs, Nil) {
+      case h :: tail =>
+        // append a head to elements from the previous result.
+        combination(tail, k - 1).map(h :: _)
+      case _ => Nil // not reachable
     }
 
   @scala.annotation.tailrec
   def cps[T](xs: List[T], res: List[List[T]])
     (f: List[T] => List[List[T]]): List[List[T]] = xs match {
     case Nil => res
-    case _ :: tail => cps(tail, res ::: f(xs))(f)
+    case _ :: tail =>
+      // f receives a result of the cps.
+      cps(tail, res ::: f(xs))(f)
   }
 
   @scala.annotation.tailrec

@@ -45,13 +45,11 @@ class CombinationSpec extends FunSpec {
         assert(actual === expected)
       }
 
-      // TODO
       it("generate a tail continuously") {
         val ts = List('a, 'b, 'c, 'd, 'e, 'f, 'g)
         val k = 4
-        val actual = Combination.combination(ts, k, Nil)
+        val actual = Combination.combination(ts, k)
         val expected = ts.combinations(k).toList
-        println(actual.length, expected.length)
         assert(actual === expected)
       }
 
