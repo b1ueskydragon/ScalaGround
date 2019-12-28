@@ -10,6 +10,9 @@ case class TreeNode(private val _value: Int) {
   var right: TreeNode = _
 }
 
+// TODO something like below ..... no more var.
+// case class TreeNode(value: Int, left: TreeNode = _, right: TreeNode = _)
+
 object Solution {
 
   lazy val nullStr = "n"
