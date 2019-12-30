@@ -1,6 +1,6 @@
 package leetcode.p0297
 
-import scala.collection.mutable
+import scala.collection.immutable.Queue
 
 // Definition for a binary tree node.
 case class TreeNode(private val _value: Int) {
@@ -19,21 +19,16 @@ object Solution {
 
   def serialize(root: TreeNode): String = {
     @scala.annotation.tailrec
-    def bfs(q: mutable.Queue[TreeNode], res: String): String = {
+    def bfs(q: Queue[TreeNode], res: String): String = {
       if (q.isEmpty) res
       else {
-        val parent = q.dequeue()
-        if (parent == null) {
-          bfs(q, res + s"$nullStr,")
-        } else {
-          q.enqueue(parent.left)
-          q.enqueue(parent.right)
-          bfs(q, res + s"${parent.value},")
-        }
+        val (parent, rem) = q.dequeue
+        if (parent == null) bfs(rem, res + s"$nullStr,")
+        else bfs(rem.enqueue(List(parent.left, parent.right)), res + s"${parent.value},")
       }
     }
-    // TODO immutable queue
-    bfs(mutable.Queue(root), "")
+
+    bfs(Queue(root), "")
   }
 
   def main(args: Array[String]): Unit = {
