@@ -3,23 +3,30 @@ package leetcode.p0297
 import scala.collection.immutable.Queue
 
 // Definition for a binary tree node.
-case class TreeNode(private val _value: Int) {
-  // TODO immutable Node
+case class MutableTreeNode(private val _value: Int) {
   val value: Int = _value
-  var left: TreeNode = _
-  var right: TreeNode = _
+  var left: MutableTreeNode = _
+  var right: MutableTreeNode = _
 }
 
-// TODO something like below ..... no more var.
-// case class TreeNode(value: Int, left: TreeNode = _, right: TreeNode = _)
+// TODO
+// sealed trait Tree[+A]
+// case class Leaf[A](value: A) extends Tree[A]
+// case class Branch[A](value: A, left: Tree[A], right: Tree[A]) extends Tree[A]
+
+case class TreeNode[A](
+  value: A,
+  left: Option[TreeNode[A]] = None,
+  right: Option[TreeNode[A]] = None
+)
 
 object Solution {
 
   lazy val nullStr = "n"
 
-  def serialize(root: TreeNode): String = {
+  def serialize(root: MutableTreeNode): String = {
     @scala.annotation.tailrec
-    def bfs(q: Queue[TreeNode], res: String): String = {
+    def bfs(q: Queue[MutableTreeNode], res: String): String = {
       if (q.isEmpty) res
       else {
         val (parent, rem) = q.dequeue
@@ -31,16 +38,39 @@ object Solution {
     bfs(Queue(root), "")
   }
 
-  def main(args: Array[String]): Unit = {
-    val root = TreeNode(1)
-    root.left = TreeNode(2)
-    root.right = TreeNode(3)
-    // root.left.left = TreeNode(4)
-    root.left.right = TreeNode(5)
-    // root.right.left = TreeNode(6)
-    root.right.right = TreeNode(7)
+  def serialize(root: TreeNode[Int]): String = {
+    @scala.annotation.tailrec
+    def bfs(q: Queue[Option[TreeNode[Int]]], res: String): String = {
+      if (q.isEmpty) res
+      else {
+        val (parent, rem) = q.dequeue
+        parent match {
+          case Some(x) => bfs(rem.enqueue(List(x.left, x.right)), res + s"${x.value},")
+          case _ => bfs(rem, res + s"$nullStr,")
+        }
+      }
+    }
 
-    println(serialize(root).split(",").map(x => if (x == nullStr) None else Some(x)).toList)
+    bfs(Queue(Option(root)), "")
+  }
+
+  def main(args: Array[String]): Unit = {
+    val mutableRoot = MutableTreeNode(1)
+    mutableRoot.left = MutableTreeNode(2)
+    mutableRoot.right = MutableTreeNode(3)
+    // root.left.left = TreeNode(4)
+    mutableRoot.left.right = MutableTreeNode(5)
+    // root.right.left = TreeNode(6)
+    mutableRoot.right.right = MutableTreeNode(7)
+
+    // List(1, 2, 3, n, 5, n, 7, n, n, n, n)
+    println(serialize(mutableRoot).split(",").toList)
+
+    val root = TreeNode(1,
+      Some(TreeNode(2, None, Some(TreeNode(5)))),
+      Some(TreeNode(3, None, Some(TreeNode(7)))))
+
+    println(serialize(root).split(",").toList)
   }
 
 }
