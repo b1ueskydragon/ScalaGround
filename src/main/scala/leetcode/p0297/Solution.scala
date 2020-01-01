@@ -77,27 +77,16 @@ object Solution {
     }
 
     bfs(Queue(root), "")
+  }
 
-    def deserialize(data: String): Tree[Int] = {
-      val nums = data.toList.map(x => if (x.toString == nullStr) None else Some(x.toInt))
+  def deserialize(data: String): Tree[Int] = {
+    val nums = data.split(",").map(x => if (x == "n") None else Some(x.toInt))
 
-      def bfs(q: Queue[Tree[Int]], res: Tree[Int], xs: List[Option[Int]]): Tree[Int] = {
-        val (parent, rem) = q.dequeue
-        parent match {
-          case Empty() => bfs(rem, res, xs.tail)
-          case node@Leaf(v) =>
-            if (xs.head.isEmpty) bfs(rem.enqueue(Empty()), node, xs.tail)
-            else {
-              bfs(rem.enqueue(Leaf(xs.head.get)), node, xs.tail)
-            }
-          // case Branch(v, left, right) => bfs(xs.tail)
-        }
-
-      }
-
-      bfs(Queue(), Empty(), nums)
+    def bfs(queue: Queue[Tree[Int]], res: Tree[Int], xs: Array[Option[Int]]): Tree[Int] = {
+      ???
     }
 
+    bfs(Queue(), Empty(), nums)
   }
 
   def main(args: Array[String]): Unit = {
@@ -125,6 +114,8 @@ object Solution {
 
     // C : List(1, 2, 3, n, 5, n, 7)
     println(serialize(tree).split(",").toList)
+
+    println(deserialize("1,2,3,n,5,n,7"))
   }
 
 }
