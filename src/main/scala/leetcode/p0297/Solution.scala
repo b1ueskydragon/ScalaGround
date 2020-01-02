@@ -88,27 +88,33 @@ object Solution {
         val (parent, rem) = queue.dequeue
         val lNode = if (nums(pos + 1).isEmpty) Empty() else Leaf(nums(pos + 1).get)
         val rNode = if (nums(pos + 2).isEmpty) Empty() else Leaf(nums(pos + 2).get)
-        val newNode = parent match {
-          case Branch(v, l: Leaf[Int], r) => Branch(v, Branch(l.value, lNode, rNode), r)
-          case Branch(v, l, r: Leaf[Int]) => Branch(v, l, Branch(r.value, lNode, rNode))
-          case Leaf(v) => Branch(v, lNode, rNode)
-        }
-        val parentLeft = newNode.left
-        val parentRight = newNode.right
 
-        res match {
-          case Branch(v, l: Leaf[Int], r) =>
-            bfs(rem.enqueue(List(parentLeft, parentRight)),
-              Branch(v, Branch(l.value, parentLeft, parentRight), r),
-              pos + 2) // did not reach
-          case Branch(v, l, r: Leaf[Int]) =>
-            bfs(rem.enqueue(List(parentLeft, parentRight)),
-              Branch(v, l, Branch(r.value, parentLeft, parentRight)),
-              pos + 2) // did not reach
-          case Leaf(v) =>
-            bfs(rem.enqueue(List(parentLeft, parentRight)),
-              Branch(v, parentLeft, parentRight),
-              pos + 2)
+        if (parent != Empty()) {
+          val newNode = parent match {
+            case Branch(v, l: Leaf[Int], r) => Branch(v, Branch(l.value, lNode, rNode), r)
+            case Branch(v, l, r: Leaf[Int]) => Branch(v, l, Branch(r.value, lNode, rNode))
+            case Leaf(v) => Branch(v, lNode, rNode)
+          }
+          val parentLeft = newNode.left
+          val parentRight = newNode.right
+
+          res match {
+            case Branch(v, l: Leaf[Int], r) =>
+              bfs(rem.enqueue(List(parentLeft, parentRight)),
+                Branch(v, Branch(l.value, parentLeft, parentRight), r),
+                pos + 2)
+            case Branch(v, l, r: Leaf[Int]) =>
+              bfs(rem.enqueue(List(parentLeft, parentRight)),
+                Branch(v, l, Branch(r.value, parentLeft, parentRight)),
+                pos + 2)
+            case Leaf(v) =>
+              bfs(rem.enqueue(List(parentLeft, parentRight)),
+                Branch(v, parentLeft, parentRight),
+                pos + 2)
+          }
+
+        } else {
+          bfs(rem, res, pos + 2)
         }
 
       } else res
@@ -151,7 +157,10 @@ object Solution {
       Branch(2, Leaf(4), Leaf(5)),
       Leaf(3)
     )))
-    println(deserialize("1,2,3,4,5"))
+    println(deserialize("1,2,3,4,5,6,7"))
+    // println(deserialize("1,2,3,4,5,6,7,8,9"))
+    // println(deserialize("1,2,3,n,n,4,5,6,7,n,8"))
+    // println(deserialize("1,2,3,4,5,6,7,8,9,10,11,12,13,14,15"))
   }
 
 }
