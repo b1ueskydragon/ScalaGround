@@ -86,8 +86,8 @@ object Solution {
     def bfs(queue: Queue[Tree[Int]], res: Tree[Int], xs: Array[Option[Int]]): Tree[Int] = {
       if (xs.tail.nonEmpty) {
         val (parent, rem) = queue.dequeue
-        val parentLeft = Leaf(xs.head.get)
-        val parentRight = Leaf(xs.tail.head.get)
+        val parentLeft = if (xs.head.isEmpty) Empty() else Leaf(xs.head.get)
+        val parentRight = if (xs.tail.head.isEmpty) Empty() else Leaf(xs.tail.head.get)
 
         parent match {
           case Leaf(v) =>
@@ -132,7 +132,11 @@ object Solution {
     // C : List(1, 2, 3, n, 5, n, 7)
     println(serialize(tree).split(",").toList)
 
-    println(deserialize("1,2,3"))
+    println(serialize(Branch(1,
+      Branch(2, Leaf(4), Leaf(5)),
+      Branch(3, Leaf(6), Leaf(7))
+    )))
+    println(deserialize("1,2,n"))
   }
 
 }
