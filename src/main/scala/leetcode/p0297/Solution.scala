@@ -83,17 +83,17 @@ object Solution {
     val nums = data.split(",").map(x => if (x == "n") None else Some(x.toInt))
 
     @scala.annotation.tailrec
-    def bfs(queue: Queue[Tree[Int]], res: Tree[Int], pos: Int): Tree[Int] = {
-      if (nums.length > pos) {
+    def bfs(queue: Queue[Tree[Int]], res: Tree[Int], xs: Array[Option[Int]]): Tree[Int] = {
+      if (xs.tail.nonEmpty) {
         val (parent, rem) = queue.dequeue
-        val parentLeft = Leaf(nums(pos + 1).get)
-        val parentRight = Leaf(nums(pos + 2).get)
+        val parentLeft = Leaf(xs.head.get)
+        val parentRight = Leaf(xs.tail.head.get)
 
         parent match {
           case Leaf(v) =>
             bfs(rem.enqueue(List(parentLeft, parentRight)),
               Branch(v, parentLeft, parentRight),
-              pos + 3)
+              xs.tail)
         }
 
       } else res
@@ -102,7 +102,7 @@ object Solution {
     if (nums.head.isEmpty) Empty()
     else {
       val base = Leaf(nums.head.get)
-      bfs(Queue(base), base, 0)
+      bfs(Queue(base), base, nums)
     }
   }
 
