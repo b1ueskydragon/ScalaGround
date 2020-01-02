@@ -96,9 +96,7 @@ object Solution {
         val parentLeft = newNode.left
         val parentRight = newNode.right
 
-        println(newNode)
-
-        parent match {
+        res match {
           case Branch(v, l: Branch[Int], r) =>
             bfs(rem.enqueue(List(parentLeft, parentRight)),
               Branch(v, Branch(l.value, parentLeft, parentRight), r),
