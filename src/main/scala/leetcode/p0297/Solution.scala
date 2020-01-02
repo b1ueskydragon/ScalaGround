@@ -83,17 +83,34 @@ object Solution {
     val nums = data.split(",").map(x => if (x == "n") None else Some(x.toInt))
 
     @scala.annotation.tailrec
-    def bfs(queue: Queue[Tree[Int]], res: Tree[Int], xs: Array[Option[Int]]): Tree[Int] = {
-      if (xs.tail.nonEmpty) {
-        val (parent, rem) = queue.dequeue
-        val parentLeft = if (xs.head.isEmpty) Empty() else Leaf(xs.head.get)
-        val parentRight = if (xs.tail.head.isEmpty) Empty() else Leaf(xs.tail.head.get)
+    def bfs(queue: Queue[Tree[Int]], res: Tree[Int], pos: Int): Tree[Int] = {
+      if (pos < nums.length - 2) {
+        val (parent: Branch[Int], rem) = queue.dequeue
+        val lNode = if (nums(pos + 1).isEmpty) Empty() else Branch(nums(pos + 1).get, Empty(), Empty())
+        val rNode = if (nums(pos + 2).isEmpty) Empty() else Branch(nums(pos + 2).get, Empty(), Empty())
+        val newNode = parent match {
+          case Branch(v, l: Leaf[Int], r) => Branch(v, Branch(l.value, lNode, rNode), r)
+          case Branch(v, l, r: Leaf[Int]) => Branch(v, l, Branch(r.value, lNode, rNode))
+          case Branch(v, _, _) => Branch(v, lNode, rNode)
+        }
+        val parentLeft = newNode.left
+        val parentRight = newNode.right
+
+        println(newNode)
 
         parent match {
-          case Leaf(v) =>
+          case Branch(v, l: Branch[Int], r) =>
+            bfs(rem.enqueue(List(parentLeft, parentRight)),
+              Branch(v, Branch(l.value, parentLeft, parentRight), r),
+              pos + 2) // did not reach
+          case Branch(v, l, r: Branch[Int]) =>
+            bfs(rem.enqueue(List(parentLeft, parentRight)),
+              Branch(v, l, Branch(r.value, parentLeft, parentRight)),
+              pos + 2) // did not reach
+          case Branch(v, _, _) =>
             bfs(rem.enqueue(List(parentLeft, parentRight)),
               Branch(v, parentLeft, parentRight),
-              xs.tail)
+              pos + 2)
         }
 
       } else res
@@ -101,8 +118,8 @@ object Solution {
 
     if (nums.head.isEmpty) Empty()
     else {
-      val base = Leaf(nums.head.get)
-      bfs(Queue(base), base, nums)
+      val base = Branch(nums.head.get, Empty(), Empty())
+      bfs(Queue(base), base, 0)
     }
   }
 
@@ -134,9 +151,9 @@ object Solution {
 
     println(serialize(Branch(1,
       Branch(2, Leaf(4), Leaf(5)),
-      Branch(3, Leaf(6), Leaf(7))
+      Leaf(3)
     )))
-    println(deserialize("1,2,n"))
+    println(deserialize("1,2,3,4,5"))
   }
 
 }
