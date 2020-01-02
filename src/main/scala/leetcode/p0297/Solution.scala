@@ -82,11 +82,28 @@ object Solution {
   def deserialize(data: String): Tree[Int] = {
     val nums = data.split(",").map(x => if (x == "n") None else Some(x.toInt))
 
-    def bfs(queue: Queue[Tree[Int]], res: Tree[Int], xs: Array[Option[Int]]): Tree[Int] = {
-      ???
+    @scala.annotation.tailrec
+    def bfs(queue: Queue[Tree[Int]], res: Tree[Int], pos: Int): Tree[Int] = {
+      if (nums.length > pos) {
+        val (parent, rem) = queue.dequeue
+        val parentLeft = Leaf(nums(pos + 1).get)
+        val parentRight = Leaf(nums(pos + 2).get)
+
+        parent match {
+          case Leaf(v) =>
+            bfs(rem.enqueue(List(parentLeft, parentRight)),
+              Branch(v, parentLeft, parentRight),
+              pos + 3)
+        }
+
+      } else res
     }
 
-    bfs(Queue(), Empty(), nums)
+    if (nums.head.isEmpty) Empty()
+    else {
+      val base = Leaf(nums.head.get)
+      bfs(Queue(base), base, 0)
+    }
   }
 
   def main(args: Array[String]): Unit = {
@@ -115,7 +132,7 @@ object Solution {
     // C : List(1, 2, 3, n, 5, n, 7)
     println(serialize(tree).split(",").toList)
 
-    println(deserialize("1,2,3,n,5,n,7"))
+    println(deserialize("1,2,3"))
   }
 
 }
