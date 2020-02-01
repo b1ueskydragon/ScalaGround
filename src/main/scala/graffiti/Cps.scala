@@ -35,7 +35,7 @@ object Cps {
 
   def main(args: Array[String]): Unit = {
     // 1
-    testCps(baz)
+    testCps(() => Cps.baz()) // to avoid Eta-expansion of zero-argument method.
 
     // 2
     println(addCps(1, 2, x => x))
