@@ -13,9 +13,8 @@ object SumOfLeftLeaves {
   def apply(root: Tree): Int = sumOfLeftLeaves(root)
 
   def sumOfLeftLeaves(root: Tree): Int = root match {
-    case Empty() => 0
-    case Leaf(_) => 0
-    case branch@Branch(_, _, _) => rec(branch, 0)
+    case branch: Branch => rec(branch, 0)
+    case _ => 0
   }
 
   // @scala.annotation.tailrec
@@ -28,7 +27,7 @@ object SumOfLeftLeaves {
     case Branch(_, left: Leaf, right: Branch) => rec(right, acc + left.value)
     case Branch(_, left: Branch, _: Empty) => rec(left, acc)
     case Branch(_, left: Branch, _: Leaf) => rec(left, acc)
-    case Branch(v, left: Branch, right: Branch) => rec(left, acc) + rec(right, acc)
+    case Branch(_, left: Branch, right: Branch) => rec(left, acc) + rec(right, acc)
   }
 
 }
