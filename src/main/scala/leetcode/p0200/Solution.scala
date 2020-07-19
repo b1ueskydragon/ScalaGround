@@ -6,16 +6,15 @@ object Solution {
     val rowDim = grid.length
     val colDim = grid(0).length
 
-    def visit(grid: Array[Array[Char]], row: Int, col: Int) {
+    def visit(row: Int, col: Int) {
       // exit cases, and only goes deeper when the spot is '1'.
       if ((row < 0 || col < 0 || row >= rowDim || col >= colDim)
         || grid(row)(col) != '1') return
-
       grid(row)(col) = '-' // visited
-      visit(grid, row + 1, col) // right
-      visit(grid, row, col - 1) //down
-      visit(grid, row - 1, col) // left
-      visit(grid, row, col + 1) // up
+      visit(row, col + 1) // right
+      visit(row - 1, col) // down
+      visit(row, col - 1) //left
+      visit(row + 1, col) // up
     }
 
     (for {
@@ -23,7 +22,7 @@ object Solution {
       col <- 0 until colDim
       if grid(row)(col) == '1'
     } yield {
-      visit(grid, row, col)
+      visit(row, col)
       1
     }).sum
   }
