@@ -11,11 +11,12 @@ object SolutionBFS {
     val colDim = grid(0).length
 
     // right, down, left, up
-    def distance = List((0, 1), (1, 0), (0, -1), (-1, 0))
+    val distance = List((0, 1), (1, 0), (0, -1), (-1, 0))
 
     @scala.annotation.tailrec
-    def visit(queue: Queue[(Int, Int)]) {
-      if (queue.isEmpty) return
+    def visit(queue: Queue[(Int, Int)]): Int = {
+      if (queue.isEmpty) return 1
+
       val ((row, col), rem) = queue.dequeue // head is parent
 
       val children = distance.map {
@@ -25,7 +26,7 @@ object SolutionBFS {
           r >= 0 && c >= 0 && r < rowDim && c < colDim && grid(r)(c) == '1'
       }
       children.foreach {
-        case (r, c) => grid(r)(c) = '-' // visited
+        case (r, c) => grid(r)(c) = '#' // visited
       }
 
       visit(rem.enqueue(children))
@@ -37,7 +38,6 @@ object SolutionBFS {
       if grid(sx)(sy) == '1'
     } yield {
       visit(Queue((sx, sy)))
-      1
     }).sum
   }
 }
