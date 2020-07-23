@@ -32,12 +32,12 @@ object SolutionBFS {
       visit(rem.enqueue(children))
     }
 
-    (for {
-      sx <- 0 until rowDim
-      sy <- 0 until colDim
-      if grid(sx)(sy) == '1'
-    } yield {
-      visit(Queue((sx, sy)))
-    }).sum
+    (0 until rowDim).foldLeft(0) {
+      (acc, sx) =>
+        (0 until colDim).foldLeft(acc) {
+          (acc, sy) =>
+            if (visit(Queue((sx, sy))) == '1') acc + 1 else acc
+        }
+    }
   }
 }
