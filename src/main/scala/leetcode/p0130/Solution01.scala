@@ -17,7 +17,10 @@ object Solution01 {
 
     val colEdges = (0 until R).flatMap(r => List(0, C - 1).map(c => (r, c)))
     val rowEdges = (0 until C).flatMap(c => List(0, R - 1).map(r => (r, c)))
-    val initQueue = enqueue(colEdges ++: rowEdges, Queue())
+    val startPoints = (colEdges ++: rowEdges).filter {
+      case (x, y) => board(x)(y) == 'O'
+    }
+    val initQueue = enqueue(startPoints, Queue())
 
     val directions = List((0, 1), (1, 0), (0, -1), (-1, 0))
 
@@ -25,12 +28,24 @@ object Solution01 {
     def visit(queue: Queue[(Int, Int)]): Unit = {
       if (queue.isEmpty) return
       val ((x, y), rem) = queue.dequeue
+
+      board(x)(y) = '#'
+
+      // All children are derived from the valid edge point.
+      val children = directions.map {
+        case (dx, dy) => (x + dx, y + dy)
+      }.filter {
+        case (r, c) =>
+          r >= 0 && c >= 0 && r < R && c < C && board(r)(c) == 'O' // 'O' derived from the edge.
+      }
+
+      children.foreach {
+        // visited
+        case (r, c) => board(r)(c) = '#'
+      }
+
       // Append child if only parent is valid.
-      if (x >= 0 && y >= 0 && x < R && y < C && board(x)(y) == 'O') {
-        board(x)(y) = '#' // 'O' derived from edge.
-        // All children are derived from the valid edge point.
-        visit(rem.enqueue(directions.map { case (dx, dy) => (x + dx, y + dy) }))
-      } else visit(rem) // if not valid, just pop.
+      visit(rem.enqueue(children))
     }
 
     visit(initQueue)
