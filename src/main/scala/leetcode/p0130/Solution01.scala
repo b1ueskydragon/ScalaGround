@@ -8,20 +8,12 @@ object Solution01 {
 
     val R = board.length
     val C = board(0).length
-    val visited = Array.fill(R, C)(false)
 
     // At first, put Edges into the queue (to start from the edge to find edge-connected zone).
     @scala.annotation.tailrec
     def enqueue(edges: Seq[(Int, Int)], q: Queue[(Int, Int)]): Queue[(Int, Int)] =
       if (edges.isEmpty) q
-      else {
-        val (x, y) = edges.head
-        val rem = edges.tail
-        if (!visited(x)(y)) {
-          visited(x)(y) = true
-          enqueue(rem, q.enqueue((x, y)))
-        } else enqueue(rem, q)
-      }
+      else enqueue(edges.tail, q.enqueue(edges.head))
 
     val colEdges = (0 until R).flatMap(r => List(0, C - 1).map(c => (r, c)))
     val rowEdges = (0 until C).flatMap(c => List(0, R - 1).map(r => (r, c)))
