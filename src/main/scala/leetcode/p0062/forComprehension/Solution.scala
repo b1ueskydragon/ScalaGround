@@ -1,4 +1,4 @@
-package leetcode.p0062
+package leetcode.p0062.forComprehension
 
 object Solution {
   def uniquePaths(m: Int, n: Int): Int = {
